@@ -33,7 +33,6 @@ line1=lista[1]
 line2=lista[2]
 
 tle_rec = ephem.readtle(name, line1, line2);    #prebere TLE podatke
-#tle_rec.compute();
 
 timelist = []   #seznam casovnih tock zamaknjenih za interval (1 minuta)
 cas=int(input("Vnesi zeljeni opazovani cas (v minutah):")) #za koliko minut naj program predvide lokacijo opazovanega staelita
@@ -46,9 +45,9 @@ for i in range(cas):
 
 pozicija = []   #seznam lokacij satelita ob dolocenem casu iz seznama "timelist"
 for t in timelist:
-    tle_rec.compute(t)
-    pozicija.append(((tle_rec.sublong / ephem.degree),(tle_rec.sublat / ephem.degree),tle_rec.elevation))
-#print(pozicija)
+    tle_rec.compute(t)  #za vsak vnos v "timelist" izracuna lat, long in elev
+    pozicija.append(((tle_rec.sublong / ephem.degree),(tle_rec.sublat / ephem.degree),tle_rec.elevation))   #podatke iz radianov pretvori v stopinje
+
 k = fastkml.KML()
 ns = '{http://www.opengis.net/kml/2.2}'
 center= fastkml.Placemark(ns,"FE",'noaa')
