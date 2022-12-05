@@ -41,12 +41,11 @@ for line in Lines:
     tle.append(line.strip())    #write content from tle.txt to list 'TLE'
 
 tmparr = [0,0]  #create temp array
-
 for i in range(0, len(tle), 3):
     tmparr[0] = tle[i+1]    #set TLE line 1 as first element in tmparr
     tmparr[1] = tle[i+2]    #set TLE line 2 as second element in tmparr
     sateliti[tle[i]] = tmparr   #set the satellite name as dict key and other two TLE lines as values for this key
-
+    tmparr=[0,0]    #clears temp array for new value
 class Error(Exception):
     """Base class for other exceptions"""
     pass
@@ -59,19 +58,19 @@ class NotSat(Error):
 
 while True:
     try:
-        satellite=input("Input Satellite name (or type 'quit' to end the program): ").upper()   #get user input for satellite name and convert it to uppercase letters
-        if satellite in sateliti:   #check if user input matches satellite name from dict
+        usr_input=input("Input Satellite name (or type 'quit' to end the program): ").upper()   #get user input for satellite name and convert it to uppercase letters
+        if usr_input in sateliti:   #check if user input matches satellite name from dict
             raise Exists    #Raised if user input is a valid satellite name
-        elif satellite == 'QUIT':   #check if user entered 'quit'
+        elif usr_input == 'QUIT':   #check if user entered 'quit'
             raise Quit  #Raised when user input equals to 'QUIT'
-        elif satellite not in sateliti: #check if user made a mistake or the specified satellite name is not in the dict
+        elif usr_input not in sateliti: #check if user made a mistake or the specified satellite name is not in the dict
             raise NotSat   #Raised if user input is NOT a valid satellite name
         break
     except Quit:
         print("Goodbye!")
         break
     except Exists:
-        print(sateliti.get(satellite))  #return TLE for that satellite
+        print(sateliti.get(usr_input))  #return TLE for that satellite
         print() #print empty line for better visibility
     except NotSat:
         print("This is not a valid satellite name.")    #return error message and allow user to enter different satellite name
