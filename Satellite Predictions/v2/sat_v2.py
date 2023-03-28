@@ -2,6 +2,7 @@ import datetime as dt
 from datetime import timedelta
 import os
 import requests
+import skyfield
 from skyfield.api import wgs84,load,EarthSatellite
 from termcolor import colored
 
@@ -86,7 +87,7 @@ while True:
         print("Goodbye!     (｡◕‿◕｡)'ﾉ''")
         break
     except Exists:
-        observatory = wgs84.latlon(46.044562, -14.489438)   #our location
+        observatory = wgs84.latlon(46.044562, -14.489438, 295)   #lon, lat, ele(m)
         line1=sateliti.get(usr_input)[0]    #reads the first TLE line
         line2=sateliti.get(usr_input)[1]    #reads the second TLE line
         ts = load.timescale()
